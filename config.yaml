@@ -17,6 +17,7 @@ ignoreFiles:
   - _cache$
   - _temp$
   - _ignore$
+  - code$
 enableEmoji: true
 markup:
   defaultMarkdownHandler: goldmark

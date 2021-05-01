@@ -1,0 +1,117 @@
+baseURL: https://www.manuel-rademaker.com/
+theme: hugo-apero
+languageCode: en
+title: Personal website
+author: Manuel Rademaker
+copyright: ''
+googleAnalytics: ''
+metaDataFormat: yaml
+footnoteReturnLinkContents: '&#8617;'
+paginate: 5
+preserveTaxonomyNames: yes
+ignoreFiles:
+  - \.Rmd$
+  - \.Rmarkdown$
+  - \.knit\.md$
+  - \.utf8\.md$
+  - _cache$
+  - _temp$
+  - _ignore$
+enableEmoji: true
+markup:
+  defaultMarkdownHandler: goldmark
+  goldmark:
+    renderer:
+      hardwraps: no
+      unsafe: yes
+  highlight:
+    style: github
+  tableOfContents:
+    endLevel: 2
+    ordered: no
+    startLevel: 2
+params:
+  custom_theme: ''
+    # serif options: Fraunces / EB Garamond / Bitter
+  # sans-serif options: Commissioner / Alegreya Sans / Metropolis
+  customheadingFontFamily: Fraunces
+  customtextFontFamily: Commissioner
+  headingFontFamily: sans-serif
+  textFontFamily: sans-serif
+  description: A modern, beautiful, and easily configurable blog theme for Hugo.
+  favicon: /img/favicon.ico
+  logo: /img/blogophonic-mark-dark.png
+  mainSections:
+    - about
+    - blog
+    - project
+    - cv
+  navallcaps: yes
+  orgName: Manuel Rademaker
+  sharing_image: /Me.jpg
+  social:
+    - icon: github
+      icon_pack: fab
+      url: https://github.com/M-E-Rademaker
+    - icon: linkedin
+      icon_pack: fab
+      url: https://www.linkedin.com/in/manuel-rademaker/
+    - icon: xing
+      icon_pack: fab
+      url: https://www.xing.com/profile/Manuel_Rademaker3/cv
+    - icon: researchgate
+      icon_pack: ai
+      url: https://www.researchgate.net/profile/Manuel-Rademaker
+    - icon: stack-overflow
+      icon_pack: fab
+      url: https://stackoverflow.com/users/4046004/manuel-r
+    - icon: envelope
+      icon_pack: fas
+      url: /contact/
+  socialInFooter: yes
+  socialInHeader: no
+  # one of: forest / grayscale / peach / plum /
+  #         poppy / sky / violet / water 
+  theme: sky
+  utterances:
+    issue_term: pathname
+    label: 'comments :crystal_ball:'
+    repo_name: apreshill/apero
+    theme: boxy-light
+    use_utterances: yes
+taxonomies:
+  category: categories
+  series: series
+  tag: tags
+menu:
+  footer:
+    - name: License
+      title: License
+      url: /license/
+      weight: 1
+    - name: Contact
+      title: Contact form
+      url: /contact/
+      weight: 2
+  header:
+    - name: About Me
+      title: About Me
+      url: /about/
+      weight: 1
+    - name: Blog
+      title: Blog
+      url: /blog/
+      weight: 2
+    - name: Projects
+      title: Project Portfolio
+      url: /project/
+      weight: 3
+    - name: CV
+      title: CV
+      url: /cv/cv.pdf
+      weight: 4
+privacy:
+  googleAnalytics:
+    anonymizeIP: yes
+    disable: no
+    respectDoNotTrack: yes

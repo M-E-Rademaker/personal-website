@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Welcome! on Personal website</title>
+    <link>https://www.manuel-rademaker.com/</link>
+    <description>Recent content in Welcome! on Personal website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 01 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.manuel-rademaker.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Leave me a message</title>
+      <link>https://www.manuel-rademaker.com/contact/</link>
+      <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/contact/</guid>
+      <description>** Contact page don&amp;rsquo;t contain a body, just the front matter above. See form.html in the layouts folder.
+Formspree requires a (free) account and new form to be set up. The link is made on the final published url in the field: Restrict to Domain. It is possible to register up to 2 emails free and you can select which one you want the forms to go to within Formspree in the Settings tab.</description>
+    </item>
+    
+    <item>
+      <title>Using Python and Telethon to access the Telegram API</title>
+      <link>https://www.manuel-rademaker.com/blog/2021-05-01_telegram_api/</link>
+      <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/blog/2021-05-01_telegram_api/</guid>
+      <description>During lockdown my friends and I started having regular quiz nights via zoom. The winner of the last quiz would be the host and the others answer questions from varying categories by sending their answers as a text via Telegram to the host. My wife would than copy-paste these answers in an Excel file and evaluate &amp;ndash; not a particularly effective process. We thought about shared documents and alike, however, no satisfactory solution was agreed upon.</description>
+    </item>
+    
+    <item>
+      <title>cSEM</title>
+      <link>https://www.manuel-rademaker.com/project/giraffes/</link>
+      <pubDate>Sat, 24 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/project/giraffes/</guid>
+      <description>cSEM allows users to estimate, analyse, test, and study linear, nonlinear, hierachical and multi-group structural equation models using composite-based approaches and procedures. The focus is one usability and, hence, extremely easy to use.      What is cSEM     The idea of cSEM is twofold:
+ Provide a unified framework to all common composite-based SEM approaches, including typical postestimation procedures. In principal, it should be similar to what lavaan does for covariance-bases/factor-based SEM.</description>
+    </item>
+    
+    <item>
+      <title>License</title>
+      <link>https://www.manuel-rademaker.com/license/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/license/</guid>
+      <description>My blog posts are released under a Creative Commons Attribution-ShareAlike 4.0 International License.
+</description>
+    </item>
+    
+  </channel>
+</rss>

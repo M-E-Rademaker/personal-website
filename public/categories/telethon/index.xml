@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Telethon on Personal website</title>
+    <link>https://www.manuel-rademaker.com/categories/telethon/</link>
+    <description>Recent content in Telethon on Personal website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 01 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.manuel-rademaker.com/categories/telethon/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Python and Telethon to access the Telegram API</title>
+      <link>https://www.manuel-rademaker.com/blog/2021-05-01_telegram_api/</link>
+      <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/blog/2021-05-01_telegram_api/</guid>
+      <description>During lockdown my friends and I started having regular quiz nights via zoom. The winner of the last quiz would be the host and the others answer questions from varying categories by sending their answers as a text via Telegram to the host. My wife would than copy-paste these answers in an Excel file and evaluate &amp;ndash; not a particularly effective process. We thought about shared documents and alike, however, no satisfactory solution was agreed upon.</description>
+    </item>
+    
+  </channel>
+</rss>

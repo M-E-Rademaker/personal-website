@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Personal website</title>
+    <link>https://www.manuel-rademaker.com/categories/</link>
+    <description>Recent content in Categories on Personal website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 01 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.manuel-rademaker.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>API</title>
+      <link>https://www.manuel-rademaker.com/categories/api/</link>
+      <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/categories/api/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://www.manuel-rademaker.com/categories/python/</link>
+      <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Telegram API</title>
+      <link>https://www.manuel-rademaker.com/categories/telegram-api/</link>
+      <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/categories/telegram-api/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Telethon</title>
+      <link>https://www.manuel-rademaker.com/categories/telethon/</link>
+      <pubDate>Sat, 01 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/categories/telethon/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>composite-based SEM</title>
+      <link>https://www.manuel-rademaker.com/categories/composite-based-sem/</link>
+      <pubDate>Sat, 24 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/categories/composite-based-sem/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>package</title>
+      <link>https://www.manuel-rademaker.com/categories/package/</link>
+      <pubDate>Sat, 24 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/categories/package/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://www.manuel-rademaker.com/categories/r/</link>
+      <pubDate>Sat, 24 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/categories/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SEM</title>
+      <link>https://www.manuel-rademaker.com/categories/sem/</link>
+      <pubDate>Sat, 24 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.manuel-rademaker.com/categories/sem/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

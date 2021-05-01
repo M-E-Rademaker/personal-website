@@ -9,7 +9,7 @@ link_list_label: "Things I've recently found interesting" # bookmarks, elsewhere
 link_list:
 - name: Lex Fridman Podcast
   url: https://lexfridman.com/podcast/
-- name: 3blue1brow
+- name: 3blue1brown (Grant Sanderson)
   url: https://www.3blue1brown.com/
 - name: The Erium Podcast (german only)
   url: https://theeriumpodcast.de

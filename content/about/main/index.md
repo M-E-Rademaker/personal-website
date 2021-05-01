@@ -8,22 +8,23 @@ show_intro: true
 intro: | 
   First things first: I am the proud father of an adorable little daughter named 
   Fiona who is objectively, without any doubt, unchallenged the cutest baby in 
-  the world (sorry everyone else 🤷).  
+  the world (sorry everyone else 🤷😉).  
 
-  Now, that being said, as you may have guessed from reading my blog posts, my 
-  primary interests lies in what could roughly be subsumed as data science, 
+  Now, that being said, as you may have guessed from reading my [blog](/blog), my 
+  primary interests lie in what could roughly be subsumed as data science, 
   i.e. subjects such as statistics, machine learning, data extraction,
-  data visualization and programming in general (mostly R but recently more 
-  and more Python). 
+  data visualization and programming in general (mostly <a href=https://www.r-project.org/about.html target = "_blank">R</a> but recently more 
+  and more <a href=https://www.python.org/ target = "_blank">Python</a>). 
   
   More generally, though, I'd describe myself as genuinely curious about the world
   and the human species. 
   I like to understand how things function. For me, understanding or solving a 
   particular task is a simple cause for satisfaction. Whether it is economics, 
-  politics, financial markets, cryptocurrencies, the human mind, relationships 
-  between people (and all the joy and suffering they cause), or the functioning 
-  of a society as a whole, there are just so many interesting thing out there to 
-  be thought about
+  politics, financial markets, cryptocurrencies and its underlying 
+  blockchain technology, the human mind, relationships 
+  between people (and all the joy and suffering they cause), psychology, sociology,
+  and philosophy, there are just so many interesting things out there to 
+  be thought about.
   
   ### Thinking
   
@@ -35,9 +36,9 @@ intro: |
   reference system and update my prior belief if inconsistent with the reference 
   system. I will explain what I mean by that system in the next section below.
   
-  In my opinion, both self-reflectivness and openness are necessary conditions 
+  In my opinion, both self-reflectiveness and openness are necessary conditions 
   for this process to take place. For one, to realize that some prior belief is
-  inconsistent with new evidence requires self-reflectivness to cognitively
+  inconsistent with new evidence requires self-reflectiveness to cognitively
   understand what these beliefs and biases actually are and how they influence ones
   thinking. Openness on the other hand is required to allow a change of beliefs 
   to happen. 
@@ -61,7 +62,7 @@ intro: |
   been enough time for me to efficiently build a rocket myself. 
   
   Of course, limits can be pushed. I do not belief limits are static. Yet, I belief
-  I have a fairly good sense of how much time and and effort it takes to push a
+  I have a fairly good sense of how much time and effort it takes to push a
   certain limit further. Some simply take longer than others. I therefore tend to
   focus on those limits that I belief are most easily (and therefore most effectively)
   pushed further out! 
@@ -69,9 +70,9 @@ intro: |
   Given that an unconditional first principles approach is simply not feasible 
   for me I've learned to embrace the advantages of pragmatism when resources are scarce:
   understanding just enough about a problem to deliver a satisfactory
-  outcome is in many instances the most effective approach. Hence, I think its 
+  outcome is in many instances the most effective approach. Hence, I think it's 
   appropriate to claim that I am pragmatic and solution-oriented whenever
-  a problem or projects involves constrains - which is, of course, always the
+  a problem or project involves constrains -- which is, of course, always the
   case in a business context.
   
   ### My reference system
@@ -103,7 +104,7 @@ intro: |
   
   ### My goals
   
-  Clearly, I've many goals in life. Some are more immediate, others are more long-term.
+  Clearly, I have many goals in life. Some are more immediate, others are more long-term.
   However, the underlying motivation could be summarized in an optimization problem 
   as follows:
   
@@ -112,16 +113,16 @@ intro: |
   
   Happiness in this case is not meant in a hedonistic sense. I don't consider
   happiness to be a state of saturation where one would not want to move, learn
-  or continue to grow ([yes Einstein](https://www.wordsandquotes.com/text/happy-as-a-pig-albert-einstein), I disagree!) In fact, I don't even consider
+  or continue to grow ([yes Einstein](https://www.wordsandquotes.com/text/happy-as-a-pig-albert-einstein), I disagree!). In fact, I don't even consider
   happiness as something to be reached but rather as an ingredient inherent in
   virtually anything I do or sense. Consequently, there are possibly infinitely
   many life trajectories that can be considered optimal - at least as long as one
   doesn't limit the space of possible sources of happiness for no good reason. 
-  Isn't that highly encouraging? I do believe so. Indeed, it is the main the 
-  reasons why I would describe myself as genuinely optimistic!
+  Isn't that highly encouraging? I do believe so! Indeed, it is the main 
+  reason why I would describe myself as genuinely optimistic!
   
-  Apart from all the people I meet in my life - my family, my wonderful wife 
-  and my daughter - one of my biggest sources of happiness has been the act of 
+  Apart from all the people I met in my life -- my family, my wonderful wife 
+  and my daughter -- one of my biggest sources of happiness has been the act of 
   learning and growing. It's surprisingly difficult to explain why, but I guess 
   it may not even be necessary to fully understand it. I'd even say that, for me, 
   learning, updating, growing **is** the "meaning of life" even without some 
@@ -129,9 +130,9 @@ intro: |
   
   ### Me from my perspective
   
-  Although every individuals personality lies in some high dimensional character
+  Although every individuals' personality lies in some high dimensional character
   space, the following is an attempt to describe myself using a subset of these
-  (the principal components so to speak). If you know me personally or ever get to
+  (the principal components, so to speak). If you know me personally or ever get to
   know me, feel free to come back here and compare your view with mine ☺.
   
   Here we go, this is me from my perspective:
@@ -150,18 +151,10 @@ intro: |
   - persistent
   - balanced
   
-  Thanks for reading!
-  
-  
-  
-  
-  
-  
+  If you made it all the way down here: Thanks for reading!
 
-  
-show_outro: true
-outro: |
-  Thanks to
+show_outro: false
+outro:
 ---
 
 ** index doesn't contain a body, just front matter above.

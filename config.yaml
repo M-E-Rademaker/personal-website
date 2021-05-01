@@ -4,7 +4,7 @@ languageCode: en
 title: Personal website
 author: Manuel Rademaker
 copyright: ''
-googleAnalytics: ''
+googleAnalytics: 270963743
 metaDataFormat: yaml
 footnoteReturnLinkContents: '&#8617;'
 paginate: 5
@@ -38,7 +38,7 @@ params:
   customtextFontFamily: Commissioner
   headingFontFamily: sans-serif
   textFontFamily: sans-serif
-  description: A modern, beautiful, and easily configurable blog theme for Hugo.
+  description: My personal homepage, blog, and project portfolio
   favicon: /img/favicon.ico
   logo: /img/blogophonic-mark-dark.png
   mainSections:
@@ -76,9 +76,9 @@ params:
   utterances:
     issue_term: pathname
     label: 'comments :crystal_ball:'
-    repo_name: apreshill/apero
+    repo_name: M-E-Rademaker/personal-website
     theme: boxy-light
-    use_utterances: yes
+    use_utterances: false
 taxonomies:
   category: categories
   series: series

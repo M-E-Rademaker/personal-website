@@ -1,5 +1,8 @@
-### ! Work in progress ! (2021-04-24)
+# Personal website
 
-# Manuel Rademaker personal website
+This is the source code for [my personal website](https://www.manuel-rademaker.com/).
+Happy reading!
 
-This is the source code for my personal webiste.
+### Code
+
+The code used in my blog entries can be found in the code folder.

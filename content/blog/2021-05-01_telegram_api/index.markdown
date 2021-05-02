@@ -236,11 +236,11 @@ teams = {"Team 1": "<Telegram phone number here>",
          "Team 2": "<Telegram phone number here>", 
          "Team 3": "<Telegram phone number here>"}
          
-n_messages_back = 20
+n_messages = 20
 answers_team = dict()
 for team in teams:
   try:
-    messages  = client.get_messages(teams[team], limit=n_messages_back)
+    messages  = client.get_messages(teams[team], limit=n_messages)
   except:
     print("Ooops, something went wrong.")
 

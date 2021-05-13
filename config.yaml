@@ -1,7 +1,7 @@
 baseURL: https://www.manuel-rademaker.com/
 theme: hugo-apero
 languageCode: en
-title: Personal website
+title: Manuel Rademaker - Personal Website
 author: Manuel Rademaker
 copyright: ''
 googleAnalytics: G-HBK6VVSS3Z
@@ -31,9 +31,13 @@ markup:
     endLevel: 2
     ordered: no
     startLevel: 2
-params:
+params: 
+  author: Manuel Rademaker
+  # These are the parameters used in hugo the hugo theme. You can name theme
+  # however you like, but renaming existing ones break the site as you need
+  # to update the reference in the theme too.
   custom_theme: ''
-    # serif options: Fraunces / EB Garamond / Bitter
+  # serif options: Fraunces / EB Garamond / Bitter
   # sans-serif options: Commissioner / Alegreya Sans / Metropolis
   customheadingFontFamily: Fraunces
   customtextFontFamily: Commissioner
@@ -48,7 +52,6 @@ params:
     - project
     - cv
   navallcaps: yes
-  orgName: Manuel Rademaker
   sharing_image: /Me.jpg
   social:
     - icon: github

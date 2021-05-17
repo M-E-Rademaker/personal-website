@@ -1,0 +1,339 @@
+---
+author: Manuel Rademaker
+date: "2021-05-17"
+draft: false
+excerpt: The data this week comes from 
+  [Gentry et al.](https://onlinelibrary.wiley.com/doi/abs/10.1002/smj.3278) 
+  by way of [DataIsPlural](https://www.data-is-plural.com/archive/2021-04-21-edition/).
+  It contains the reasons for CEO departure in S&P 1500 firms from 2000 through 2018.
+title: Analyzing CEO depatures
+---
+## Description
+
+The data this week comes from 
+[Gentry et al.](https://onlinelibrary.wiley.com/doi/abs/10.1002/smj.3278) 
+by way of [DataIsPlural](https://www.data-is-plural.com/archive/2021-04-21-edition/).
+It contains the reasons for CEO departure in S&P 1500 firms from 2000 through 2018.
+
+## Setup
+
+```r
+require(tidytuesdayR) # to easily get the tidy Tuesday data
+require(tidyverse)    # includes dplyr, tidyr, ggplot, forcats etc.
+require(visdat)       # for visualizing missing data (and data types)
+```
+
+
+
+I always take roughly the same approach when analyzing data that is already
+reasonably cleaned but not fully tidy yet. Depending on the type of data,
+additional steps are necessary and some others may be skipped.
+
+Here are the steps I'm going to take:
+
+1. Load data and get an understanding of the variables
+1. Develop interesting questions/hypotheses
+1. Tidy/clean
+1. Address questions/hypotheses
+
+**The goal is to come up with 2-3 insightful, publication ready visualizations.**
+
+## Load data and get an understanding
+
+
+```r
+tt  <- tidytuesdayR::tt_load('2021-04-27')
+ceo <- tt$departures
+```
+
+
+```r
+vis_dat(ceo)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
+
+Alright so there are 19 columns with 9423 observations.
+Some character and some numeric columns and one date/time column.
+There are missing values but they seem mostly "natural" in a sense that they just
+mean, that the column doesn't apply to that observation (e.g., `interim_coceo`: most CEO are not interim CEOs).
+
+### Develop questions / hypotheses
+
+Ok, looks like there are not many variables that actually explains more 
+precisely **why** a CEO
+might have departed the way he did (e.g., the competition had stronger growth, 
+winnings declined etc.). So the main point of the data set is to compare
+the reasons for departure as given by the data set.
+
+Here are a couple of questions that come to my mind:
+
+1. What is the distribution of CEO departure reasons. (by year (or every 5
+   years), overall)?
+1. Does the distribution change over the years (i.e. are CEOs now more likely
+   to be removed for legal reasons for example)?
+1. Do CEOs that are fired (3 & 4) get fired again more often than others? Or in
+   general: whats the likelihood of departing for reason x given reason y for 
+   dismissal.
+1. Look at companies and their CEO turnover. Which companies stand out (e.g.,
+   because the dismiss many CEOs).
+1. If possible, look at the history of some interesting CEOs. Maybe there are
+   some that stand out (e.g. because they always left for legal reasons).
+
+### Address questions / hypotheses
+#### Overall distribution of depature
+Lets start by getting a feel for what the distribution of departure is overall.
+
+
+```r
+ggplot(ceo, aes(y = departure_code)) + 
+   geom_bar(fill = main_color) +
+   labs(
+      title    = "Reason for CEO departure",
+      x = "",
+      y = ""
+   )
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
+This is a unpolished raw first plot.
+
+```r
+ceo %>% 
+   group_by(fyear, departure_code) %>% 
+   count()
+## # A tibble: 255 x 3
+## # Groups:   fyear, departure_code [255]
+##    fyear departure_code     n
+##    <dbl>          <dbl> <int>
+##  1  1987              5     1
+##  2  1992              1     1
+##  3  1992              3    10
+##  4  1992              5    44
+##  5  1992              6     1
+##  6  1992              7     2
+##  7  1993              1     2
+##  8  1993              2     1
+##  9  1993              3    25
+## 10  1993              4     1
+## # ... with 245 more rows
+```
+
+Hmm, apparently there are more years than what the description said (2000 - 2018,
+if I understood correctly).
+
+The earliest is 1987.
+
+Before I continue, I am going to do to some data wrangling
+
+1. I don't like working with the codes. I think for plots its much more 
+   meaningful to have the actual labels --> create label column
+1. I make `fyear` a date column as this makes working with axis breaks and
+   labels much easier.
+1. Looking at the plot, three labels stand out: 
+   - `3` (bad job performance)
+   - `5` (retired)
+   - `7` (other)
+   I will only keep these plus `4` and `6`. I ignore Death (1), Illness (2), Missing (8),
+   and the `execucomp` error label as they are not meaningful or simply not
+   too interesting.
+   
+
+```r
+ceo_reduced <- ceo %>% 
+   filter(departure_code %in% 3:7) %>% 
+   mutate(
+      departure_label = as.factor(recode(departure_code,
+         `3` = "Bad performance",
+         `4` = "Legal",
+         `5` = "Retired",
+         `6` = "New opportunity",
+         `7` = "Other")),
+      fyear = lubridate::make_date(fyear)) %>% 
+   relocate(fyear, departure_label)
+```
+
+So here is the first plot (+ polishing).
+
+```r
+ceo_sum <- ceo_reduced %>% 
+   group_by(departure_label) %>% 
+   count()
+
+ggplot(ceo_sum, aes(y = fct_reorder(departure_label, n), x = n)) + 
+   geom_col(fill = main_color) +
+   labs(
+      title = "CEO depature by reason",
+      subtitle = "S&P 1500 firms between 1987 - 2019",
+      x = "",
+      y = "",
+      caption = "Source: Gentry et al."
+   ) + 
+   scale_x_continuous(breaks = scales::breaks_width(500))
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
+
+Most CEOs retire or they leave their position because of a merger, restructuring or
+some other event subsumed in "Other". The most interesting to me, however, 
+are bad performance and legal. I will focus on them more. 
+
+#### Question 2
+Lets see if there are any changes over time.
+
+
+```r
+ceo_reduced %>%
+   group_by(fyear, departure_label) %>% 
+   count() %>% 
+   ggplot(aes(x = fyear, y = n, color = departure_label)) + 
+   geom_line() + 
+   labs(
+      title = "CEO departure by reason over time",
+      subtitle = "S&P 1500 firms between 1987 - 2019",
+      color = "Departure label",
+      y     = "",
+      x     = ""
+   )
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
+
+I think its better to look at ratios than absolute numbers here because there
+are not always the same number of departures per year (especially at the beginning
+and the end of the time period available).
+I delete 1987 as it not representative with `\(n = 1\)`.
+In addition, the order of the labels should match the lines.
+
+
+```r
+ceo_reduced %>%
+   filter(fyear != "1987-01-01")  %>%
+   group_by(fyear, departure_label) %>% 
+   count() %>% 
+   group_by(fyear) %>% 
+   mutate(count_fyear = sum(n),
+          share_fyear = n/count_fyear) %>% 
+   ungroup() %>% # for fct_reorder!
+   mutate(departure_label = fct_reorder(departure_label, -share_fyear, last)) %>% 
+   ggplot(aes(x = fyear, y = share_fyear, color = departure_label)) + 
+   geom_line() + 
+   labs(
+      title = "CEO departure by Reason over time",
+      subtitle = "S&P 1500 firms between 1987 - 2019",
+      color = "Departure label",
+      x     = "",
+      y     = "% of total departures"
+   ) + 
+   scale_y_continuous(labels = scales::label_percent()) +
+   scale_x_date(
+      breaks = scales::breaks_width("4 years"),
+      labels = scales::label_date("%Y")
+      )
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
+I don't see any obvious patterns. Maybe a slight increase in "Bad performance" 
+departures over the years. But its not particularly pronounced.
+
+#### Question 3
+
+Lets now focus on those that get fired for legal or bad performance reasons and
+examine if they are more likely to get fired again. Of course, this only
+works if I have enough CEOs that depart at list twice.
+
+First I get all CEO that appear at least twice.
+
+```r
+ceo_al_twice <- ceo_reduced %>%
+   group_by(exec_fullname) %>% 
+   mutate(appears_al_twice = n(), .after = departure_label) %>% 
+   filter(appears_al_twice > 1) %>%
+   ungroup()
+
+length(unique(ceo_al_twice$exec_fullname))
+## [1] 471
+```
+
+Ok, there are 471 CEO that appear at least twice in the data. This is something
+to work with. Lets take a look
+
+
+```r
+table(ceo_al_twice$appears_al_twice) / c(2, 3, 4)
+## 
+##   2   3   4 
+## 430  39   2
+```
+There are only a few left that appear more than 2 times.
+
+```r
+ceo_changes <- ceo_al_twice %>% 
+   arrange(fyear) %>% 
+   group_by(exec_fullname) %>% 
+   mutate(departure_no = 1:n(), .after = departure_label,
+          departure_no = fct_inorder(recode(departure_no,
+             `1` = "First departure",
+             `2` = "Second departure",
+             `3` = "Third departure",
+             `4` = "Fourth departure"))) %>% 
+   ungroup()
+
+ggplot(ceo_changes, aes(x = departure_no, y = departure_label, group = exec_fullname)) + 
+   geom_line() +
+   labs(
+      x = "",
+      y = ""
+   )
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" />
+
+This is not really meaningful yet. A couple of things will help.
+
+1. Highlight the path of the 2 CEOs that had 4 changes and label them.
+1. Use an appropriate techniques to address overplotting to also 
+   highlight which changes appear more often.
+   
+For the latter I am going to use the `alpha` parameter and the `size` aesthetic.
+(This took me a while to figure out...)
+
+
+```r
+ceo_changes_freq <- ceo_changes %>% 
+   count(departure_label, departure_no)
+
+ceo_4_changes <- ceo_changes %>% 
+   filter(appears_al_twice  == 4)
+
+ggplot(ceo_changes, aes(x = departure_no, y = departure_label)) + 
+   geom_line(aes(group = exec_fullname), alpha = 0.2) +
+   geom_point(
+      data = ceo_changes_freq, 
+      mapping = aes(size = n)) + 
+   geom_line(
+      data = ceo_4_changes, 
+      mapping = aes(group = exec_fullname, color = exec_fullname),
+      show.legend = FALSE) +
+   geom_text(      
+      data = filter(ceo_4_changes, departure_no  == "Fourth departure"), 
+      mapping = aes(label = exec_fullname),
+      nudge_y = -0.1
+      ) + 
+   labs(
+      title = "Trajectories of the reasons for CEO departure",
+      subtitle = "S&P 1500 firms between 1987 - 2019",
+      x = "",
+      y = "",
+      size = "Number of cases"
+   ) + 
+   theme(legend.position="bottom")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" />
+
+## Summary
+
+That's it for this data set. I used a bit more time than I planned because it took
+me a while to figure out how to make the last plot. Especially, the weighting
+of the lines by frequency of the type of change was not easy to me. 

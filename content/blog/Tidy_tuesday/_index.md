@@ -2,7 +2,7 @@
 title: R Tidy Tuesday analysis
 author: Manuel Rademaker
 description: |
-  In this series I analyze interesting data sets provided by the great R Tidy
+  In this series, I analyze interesting data sets provided by the great R Tidy
   Tuesday data project.
 layout: list-sidebar
 show_author_byline: true
@@ -37,7 +37,7 @@ sidebar:
   title: R Tidy Tuesday analysis
   author: Manuel Rademaker
   description: |
-    I consider data analysis just like a sport: to become or stay good at it, 
+    I consider data analysis just like a sport: to become or stay good at it 
     regular training is required. In this series, I analyze interesting data sets 
     provided by the great 
     [R Tidy Tuesday data project](https://github.com/rfordatascience/tidytuesday) 
@@ -47,7 +47,7 @@ sidebar:
     and an extra 30 minutes for documenting.* 
     
     Needless to say, the analysis and the documentation are not meant to be 
-    exhaustive and perfect. 
+    exhaustive and perfect in this case.
     
     I try to write one or two of these analysis per month.
 

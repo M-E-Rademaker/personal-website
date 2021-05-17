@@ -15,6 +15,48 @@ The data this week comes from
 by way of [DataIsPlural](https://www.data-is-plural.com/archive/2021-04-21-edition/).
 It contains the reasons for CEO departure in S&P 1500 firms from 2000 through 2018.
 
+### Data and variables
+
+Taken from the Tidy Tuesday github repository.
+
+#### `departures.csv`
+
+|variable             |class     |description |
+|:--------------------|:---------|:-----------|
+|dismissal_dataset_id |double    |The primary key. This will change from one version to the next. gvkey-year is also a unique identifier|
+|coname               |character |The Compustat Company Name |
+|gvkey                |double    | The Compustat Company identifier |
+|fyear                |double    | The fiscal year in which the event occured  |
+|co_per_rol           |double    | The executive/company identifier from Execucomp |
+|exec_fullname        |character | The executive full name as listed in Execucomp  |
+|departure_code       |double    | The departure reason coded from criteria above |
+|ceo_dismissal        |double    | A dummy code for involuntary, non-health related turnover (Codes 3 & 4). |
+|interim_coceo        |character | A descriptor of whether the CEO was listed as co-CEO or as an interim CEO (sometimes interim positions last a couple years) |
+|tenure_no_ceodb      |double    | For CEOs who return, this value should capture whether this is the first or second time in office |
+|max_tenure_ceodb     |double    | For this CEO, how many times did s/he serve as CEO |
+|fyear_gone           |double    | An attempt to determine the fiscal year of the CEO’s effective departure date. Occasionally, looking at departures on Execucomp does not agree with the leftofc date that we have. They apparently try to balance between the CEO serving one month in the fiscal year against documenting who was CEO on the date of record. I would stick to the Execucomp’s fiscal year, departure indication for consistency with prior work |
+|leftofc              |double    | Left office of CEO, modified occasionally from execucomp but same interpretation. The date of effective departure from the office of CEO |
+|still_there          |character | A date that indicates the last time we checked to see if the CEO was in office. If no date, then it looks like the CEO is still in office but we are in the process of checking |
+|notes                |character | Long-form description and justification for the coding scheme assignment.  |
+|sources              |character | URL(s) of relevant sources from internet or library sources. |
+|eight_ks             |character | URL(s) of 8k filing from the Securities and Exchange Commission from 270 days before through 270 days after the CEO’s leftofc date which might relate to the turnover. Included here are any 8k filing 5.02 (departure of directors or principal executives) or simply item 5 if it is an older filing. These were collected without examining their content. |
+|cik                  |double    | The company’s Central Index Key |
+|_merge               |character | Merge details |
+
+#### CEO Departure Code
+
+| Code Number             | Type     | description |
+|:--------------------|:---------|:-----------|
+| 1 | Involuntary - CEO death | The CEO died while in office and did not have an opportunity to resign before health failed. |
+|2|Involuntary - CEO illness|Required announcement that the CEO was leaving for health concerns rather than removed during a health crisis.|
+|3| Involuntary – CEO dismissed for job performance | The CEO stepped down for reasons related to job performance. This included situations where the CEO was immediately terminated as well as when the CEO was given some transition period, but the media coverage was negative. Often the media cited financial performance or some other failing of CEO job performance (e.g., leadership deficiencies, innovation weaknesses, etc.).|
+|4|Involuntary - CEO dismissed for legal violations or concerns|The CEO was terminated for behavioral or policy-related problems. The CEO's departure was almost always immediate, and the announcement cited an instance where the CEO violated company HR policy, expense account cheating, etc.|
+|5|Voluntary - CEO retired|Voluntary retirement based on how the turnover was reported in the media. Here the departure did not sound forced, and the CEO often had a voice or comment in the succession announcement. Media coverage of voluntary turnover was more valedictory than critical. Firms use different mandatory retirement ages, so we could not use 65 or older and facing mandatory retirement as a cut off. We examined coverage around the event and subsequent coverage of the CEO’s career when it sounded unclear. |
+|6|Voluntary - new opportunity (new career driven succession)|The CEO left to pursue a new venture or to work at another company. This frequently occurred in startup firms and for founders.|
+|7|Other|Interim CEOs, CEO departure following a merger or acquisition, company ceased to exist, company changed key identifiers so it is not an actual turnover, and CEO may or may not have taken over the new company.|
+|8|Missing|Despite attempts to collect information, there was not sufficient data to assign a code to the turnover event. These will remain the subject of further investigation and expansion.|
+|9|Execucomp error|If a researcher were to create a dataset of all potential turnovers using execucomp (co_per_rol != l.co_per_rol), several instances will appear of what looks like a turnover when there was no actual event. This code captures those.|
+
 ## Setup
 
 ```r
@@ -48,17 +90,19 @@ ceo <- tt$departures
 
 
 ```r
+dim(ceo)
+## [1] 9423   20
 vis_dat(ceo)
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
 
-Alright so there are 19 columns with 9423 observations.
+Alright so there are 20 columns with 9423 observations.
 Some character and some numeric columns and one date/time column.
 There are missing values but they seem mostly "natural" in a sense that they just
 mean, that the column doesn't apply to that observation (e.g., `interim_coceo`: most CEO are not interim CEOs).
 
-### Develop questions / hypotheses
+## Develop questions / hypotheses
 
 Ok, looks like there are not many variables that actually explains more 
 precisely **why** a CEO
@@ -68,7 +112,7 @@ the reasons for departure as given by the data set.
 
 Here are a couple of questions that come to my mind:
 
-1. What is the distribution of CEO departure reasons. (by year (or every 5
+1. What is the distribution of CEO departure reasons (by year (or every 5
    years), overall)?
 1. Does the distribution change over the years (i.e. are CEOs now more likely
    to be removed for legal reasons for example)?
@@ -76,12 +120,12 @@ Here are a couple of questions that come to my mind:
    general: whats the likelihood of departing for reason x given reason y for 
    dismissal.
 1. Look at companies and their CEO turnover. Which companies stand out (e.g.,
-   because the dismiss many CEOs).
+   because they dismiss many CEOs).
 1. If possible, look at the history of some interesting CEOs. Maybe there are
    some that stand out (e.g. because they always left for legal reasons).
 
-### Address questions / hypotheses
-#### Overall distribution of depature
+## Address questions / hypotheses
+### Question 1: Overall distribution of depature
 Lets start by getting a feel for what the distribution of departure is overall.
 
 
@@ -96,7 +140,7 @@ ggplot(ceo, aes(y = departure_code)) +
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
-This is a unpolished raw first plot.
+This is a unpolished raw first plot.[^1]
 
 ```r
 ceo %>% 
@@ -120,9 +164,7 @@ ceo %>%
 ```
 
 Hmm, apparently there are more years than what the description said (2000 - 2018,
-if I understood correctly).
-
-The earliest is 1987.
+if I understood correctly). The earliest is 1987.
 
 Before I continue, I am going to do to some data wrangling
 
@@ -156,11 +198,10 @@ ceo_reduced <- ceo %>%
 So here is the first plot (+ polishing).
 
 ```r
-ceo_sum <- ceo_reduced %>% 
+ceo_reduced %>% 
    group_by(departure_label) %>% 
-   count()
-
-ggplot(ceo_sum, aes(y = fct_reorder(departure_label, n), x = n)) + 
+   count() %>% 
+   ggplot(aes(y = fct_reorder(departure_label, n), x = n)) + 
    geom_col(fill = main_color) +
    labs(
       title = "CEO depature by reason",
@@ -178,7 +219,8 @@ Most CEOs retire or they leave their position because of a merger, restructuring
 some other event subsumed in "Other". The most interesting to me, however, 
 are bad performance and legal. I will focus on them more. 
 
-#### Question 2
+### Question 2: Reason for departure over time
+
 Lets see if there are any changes over time.
 
 
@@ -191,7 +233,7 @@ ceo_reduced %>%
    labs(
       title = "CEO departure by reason over time",
       subtitle = "S&P 1500 firms between 1987 - 2019",
-      color = "Departure label",
+      color = "Reason",
       y     = "",
       x     = ""
    )
@@ -202,7 +244,7 @@ ceo_reduced %>%
 I think its better to look at ratios than absolute numbers here because there
 are not always the same number of departures per year (especially at the beginning
 and the end of the time period available).
-I delete 1987 as it not representative with `\(n = 1\)`.
+I delete 1987 as it not representative with n = 1.
 In addition, the order of the labels should match the lines.
 
 
@@ -212,8 +254,7 @@ ceo_reduced %>%
    group_by(fyear, departure_label) %>% 
    count() %>% 
    group_by(fyear) %>% 
-   mutate(count_fyear = sum(n),
-          share_fyear = n/count_fyear) %>% 
+   mutate(share_fyear = n/sum(n)) %>% 
    ungroup() %>% # for fct_reorder!
    mutate(departure_label = fct_reorder(departure_label, -share_fyear, last)) %>% 
    ggplot(aes(x = fyear, y = share_fyear, color = departure_label)) + 
@@ -221,7 +262,7 @@ ceo_reduced %>%
    labs(
       title = "CEO departure by Reason over time",
       subtitle = "S&P 1500 firms between 1987 - 2019",
-      color = "Departure label",
+      color = "Reason",
       x     = "",
       y     = "% of total departures"
    ) + 
@@ -236,11 +277,10 @@ ceo_reduced %>%
 I don't see any obvious patterns. Maybe a slight increase in "Bad performance" 
 departures over the years. But its not particularly pronounced.
 
-#### Question 3
+### Question 3: Trajectories
 
-Lets now focus on those that get fired for legal or bad performance reasons and
-examine if they are more likely to get fired again. Of course, this only
-works if I have enough CEOs that depart at list twice.
+Lets now focus on the trajectories of those CEOs that appear more than once in the
+data. Of course, this only works if I have some CEOs that appear at least twice.
 
 First I get all CEO that appear at least twice.
 
@@ -256,10 +296,11 @@ length(unique(ceo_al_twice$exec_fullname))
 ```
 
 Ok, there are 471 CEO that appear at least twice in the data. This is something
-to work with. Lets take a look
+to work with. Lets take a look:
 
 
 ```r
+# Note: divide to get the unique values
 table(ceo_al_twice$appears_al_twice) / c(2, 3, 4)
 ## 
 ##   2   3   4 
@@ -332,8 +373,16 @@ ggplot(ceo_changes, aes(x = departure_no, y = departure_label)) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" />
 
+Two CEOs appear 4 times in the data set. None of them left for legal or bad performance reasons. Interestingly, retirement doesn't seem to be "final". Some CEO come back. All in all, there is no overwhelmingly clear connection but certainly
+some interesting insights.
+
 ## Summary
 
-That's it for this data set. I used a bit more time than I planned because it took
-me a while to figure out how to make the last plot. Especially, the weighting
-of the lines by frequency of the type of change was not easy to me. 
+That's it for this data set. There is of course always more to discover, however, I already used a more time than I planned because it took
+me a while to figure out how to make the last plot. I had never really used
+the `size` aesthetic before. I had to learn how to use if effectively first.
+
+[^1]: If you reproduce this plot (and the following as well), the appearance will
+be different. This is because I use a custom theme that is tailored to work well with
+the overall appearance of this website (same font families, color palette etc.). 
+If you want to now the details of the theme, check out the code on Github.

@@ -2,6 +2,7 @@
 author: Manuel Rademaker
 date: "2021-05-17"
 draft: false
+links:
 excerpt: The data this week comes from 
   [Gentry et al.](https://onlinelibrary.wiley.com/doi/abs/10.1002/smj.3278) 
   by way of [DataIsPlural](https://www.data-is-plural.com/archive/2021-04-21-edition/).
@@ -385,4 +386,4 @@ the `size` aesthetic before. I had to learn how to use if effectively first.
 [^1]: If you reproduce this plot (and the following as well), the appearance will
 be different. This is because I use a custom theme that is tailored to work well with
 the overall appearance of this website (same font families, color palette etc.). 
-If you want to now the details of the theme, check out the code on Github.
+If you want to now the details of the theme, check out the [code on Github](https://github.com/M-E-Rademaker/personal-website/tree/main/code).

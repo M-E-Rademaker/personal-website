@@ -1,6 +1,6 @@
 ---
 author: Manuel Rademaker
-date: "2021-05-17"
+date: "2021-05-19"
 draft: false
 links:
 excerpt: The data this week comes from 
@@ -374,16 +374,20 @@ ggplot(ceo_changes, aes(x = departure_no, y = departure_label)) +
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" />
 
-Two CEOs appear 4 times in the data set. None of them left for legal or bad performance reasons. Interestingly, retirement doesn't seem to be "final". Some CEO come back. All in all, there is no overwhelmingly clear connection but certainly
+Two CEOs appear 4 times in the data set. None of them left for legal or bad 
+performance reasons. Interestingly, retirement doesn't seem to be "final". 
+Some CEO come back. All in all, there is no overwhelmingly clear connection but certainly
 some interesting insights.
 
 ## Summary
 
-That's it for this data set. There is of course always more to discover, however, I already used a more time than I planned because it took
+That's it for this data set. There is of course always more to discover, however, 
+I already used more time than I planned because it took
 me a while to figure out how to make the last plot. I had never really used
-the `size` aesthetic before. I had to learn how to use if effectively first.
+the `size` aesthetic before so there was some trial and error necessary in order
+to find out how to use it most effectively.
 
 [^1]: If you reproduce this plot (and the following as well), the appearance will
 be different. This is because I use a custom theme that is tailored to work well with
-the overall appearance of this website (same font families, color palette etc.). 
-If you want to now the details of the theme, check out the [code on Github](https://github.com/M-E-Rademaker/personal-website/tree/main/code).
+the overall appearance of this website (same font families, color palettes etc.). 
+If you want to know the details of the theme, check out the [code on Github](https://github.com/M-E-Rademaker/personal-website/tree/main/code).

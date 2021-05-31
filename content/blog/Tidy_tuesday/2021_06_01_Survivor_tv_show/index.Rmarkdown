@@ -1,0 +1,276 @@
+---
+author: Manuel Rademaker
+date: "`r Sys.Date()`"
+draft: false
+links:
+excerpt: The data this week comes from the `survivorR` R package by way of Daniel Oehm.
+  `survivoR` is a collection of data sets detailing events across all 40 seasons of the US
+  Survivor, including castaway information, vote history, immunity and reward challenge
+  winners and jury votes.
+
+title: Analyzing Survivor TV Show data
+---
+## Description
+
+The data this week comes from the `survivorR` R package by way of [Daniel Oehm](http://gradientdescending.com/survivor-data-from-the-tv-series-in-r/).
+`survivoR` is a collection of data sets detailing events across all 40 seasons of the US
+Survivor, including castaway information, vote history, immunity and reward challenge
+winners and jury votes.
+
+Full details about the package and additional datasets available in the package are available on [GitHub](https://github.com/doehm/survivoR). The package is on CRAN as `survivoR` and can be installed for ALL the datasets, themes, etc via `install.packages("survivoR")`.
+
+Additional context/details about the Survivor TV show can be found on [Wikipedia](https://en.wikipedia.org/wiki/Survivor_(American_TV_series)).
+
+### Data and variables
+
+Taken from the Tidy Tuesday github repository. There are several data sets.
+I'm only going to examine the `summary` data set. Here is a variable description.
+
+#### `summary.csv`
+
+|variable        |class     |description |
+|:---------------|:---------|:-----------|
+|season_name     |character | Name of season |
+|season          |integer   | Season number |
+|location        |character | Season geo location |
+|country         |character | Season country |
+|tribe_setup     |character | Tribe Setup |
+|full_name       |character | Full name of player |
+|winner          |character | Season winner |
+|runner_ups      |character | Runner ups |
+|final_vote      |character | Final vote for winner |
+|timeslot        |character | Time slot on TV |
+|premiered       |double    | Premiered date |
+|ended           |double    | Ended date |
+|filming_started |double    | Filming started date |
+|filming_ended   |double    | Filming ended date |
+|viewers_premier |double    | Viewers (millions) at premier |
+|viewers_finale  |double    | Viewers at finale |
+|viewers_reunion |double    | Viewers for reunion |
+|viewers_mean    |double    | Viewers average |
+|rank            |double    | Viewer ranking |
+
+
+## Setup
+```{r message=FALSE, warning=FALSE}
+require(tidytuesdayR) # to easily get the tidy Tuesday data
+require(tidyverse)    # includes dplyr, tidyr, ggplot, forcats etc.
+require(visdat)       # for visualizing missing data (and data types)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+## Setup options
+knitr::opts_chunk$set(
+   echo         = TRUE,
+   fig.showtext = TRUE,
+   fig.align    = "center",
+   message      = FALSE,
+   warning      = FALSE,
+   collapse     = TRUE
+   )
+
+## Load showtext for fonts
+require(showtext)
+
+## Load fonts
+# font_add(family = "commissioner",
+#          regular = "_not_for_git/Commissioner/static/Commissioner-Light.ttf")
+# font_add(family = "fraunces",
+#          regular = "_not_for_git/Fraunces/static/Fraunces_9pt_Soft/Fraunces_9pt_Soft-Regular.ttf")
+
+## Load fonts
+font_add(family = "commissioner",
+         regular = "../../fonts/Commissioner-Light.ttf")
+font_add(family = "fraunces",
+         regular = "../../fonts/Fraunces_9pt_Soft-Regular.ttf")
+
+## Colors 
+main_color    = "#516DB0"
+txt_color     = "#404040"
+bg_color      = "#f2f2f1"
+bg_color2     = "#FFFFFF"
+color_scheme  = c("#6796DE", "#B54256", "#EFCB8F", "#569AA3", "#E38D4C")
+
+## Create & set custom theme
+website_theme <- theme_light() + theme(
+   plot.title       = element_text(color = main_color, family = "fraunces"),
+   plot.subtitle    = element_text(color = txt_color, family = "commissioner"),
+   plot.caption     = element_text(color = txt_color, family = "commissioner"),
+   plot.background  = element_rect(fill = bg_color, color = bg_color),
+   axis.title       = element_text(color = txt_color, family = "commissioner"),
+   axis.text        = element_text(color = txt_color, family = "commissioner"),
+   panel.background = element_rect(color = bg_color2),
+   panel.border     = element_blank(),
+   legend.background = element_rect(fill = bg_color),
+   legend.text      = element_text(color = txt_color, family = "commissioner"),
+   legend.title     = element_text(color = txt_color, family = "commissioner")
+)
+
+theme_set(website_theme)
+
+## For default color scheme
+scale_colour_discrete <- function(...) {
+  scale_colour_manual(..., values = color_scheme)
+}
+```
+
+I always take roughly the same approach when analyzing data that is already
+reasonably cleaned but not fully tidy yet. Depending on the type of data,
+additional steps are necessary and some others may be skipped.
+
+Here are the steps I'm going to take:[^1]
+
+1. Load data and get an understanding of the variables
+1. Develop interesting questions/hypotheses
+1. Tidy/clean
+1. Address questions/hypotheses
+
+**The goal is to come up with 2-3 insightful, publication ready visualizations.**
+
+## Load data and get an understanding
+```{r echo=FALSE, include=FALSE}
+summary <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/summary.csv')
+```
+```{r eval=FALSE}
+tt  <- tidytuesdayR::tt_load('2021-06-01')
+summary <- tt$summary
+```
+
+```{r}
+dim(summary)
+vis_dat(summary)
+```
+
+Alright so there are 19 columns with 40 observations. There are some NAs but nothing
+unusual at first sight.
+
+## Develop questions / hypotheses
+
+I don't know the Survivor TV Show but I assume candidates have to survive some
+challenges and the last one standing is the winner -- I guess?
+
+There is information on how many watched the show and on the time it was aired.
+There is information on who one and whos the runner up. Lets quickly check if
+people appear twice.
+
+```{r}
+summary %>% 
+   count(winner) %>% 
+   arrange(desc(n)) %>% 
+   head(6)
+```
+Ok some appear more than one time.
+
+What is `tribe_setup`?
+
+```{r}
+summary %>% 
+   count(tribe_setup)
+```
+
+I guess this somehow describes the how people are grouped to survive?
+
+Just some quick questions that come to my mind
+
+1. Look at season ranking over seasons 
+1. Number of viewers by season
+1. Season ranking and time slot ?
+1. Variables `viewers_finale`, `viewers_premiere` etc. seem to describe the number of
+   viewers at different "stages" of the season. Will probably convert them
+   to one variable and look at ranking by "stage"?
+1. Did the length of the filming (difference between `filming_ended - filming_started`) 
+   somehow change over time. 
+   
+
+## Address questions / hypotheses
+### Question 1: Season ranking over seasons
+
+```{r}
+ggplot(summary, aes(y = rank, x = season)) +
+   geom_line() + 
+   geom_point() + 
+   scale_x_continuous(breaks = scales::breaks_width(5)) + 
+   labs(
+      title = "Viewer ranking by season",
+      subtitle = "Lowest rank is best; hightest is worst",
+      x = "Season",
+      y = "Viewer ranking"
+   )
+```
+Apparently viewers ranking generally goes up . Since a higher ranking is actually
+bad -- I assume rank 1 is best -- and people might be inclined to think that
+higher ranking is good, its probably good to explicitly mention that in the graph.
+
+### Question 2: Number of viewers
+
+```{r}
+summary %>% 
+   pivot_longer(cols = viewers_premier:viewers_mean, 
+                names_to = "stage",
+                names_prefix = "viewers_",
+                values_to = "viewers") %>% 
+   ggplot(aes(x = season, y = viewers, color = fct_reorder(stage, -viewers))) + 
+   geom_line() +
+   geom_point() + 
+   scale_x_continuous(breaks = scales::breaks_width(5)) +
+   labs(
+      title = "Number of viewers by season",
+      subtitle = "In million viewers",
+      x = "Season",
+      y = "# Viewers",
+      color = "Stage"
+   )
+```
+Number of viewers generally declined over seasons. A pretty normal development.
+However, the absolute level is still decent with > 10 million viewers until about season
+25. I think its also not surprising that the reunion show is typically less well-viewed
+than the rest.
+
+### Question 2.1: Correlation between ranking and number of viewers
+```{r}
+ggplot(summary, aes(x = viewers_mean, y = rank)) + 
+   geom_point() + 
+   geom_smooth(method = "lm") + 
+   labs(
+      title = "Season ranking vs. number of viewers",
+      subtitle = "In million viewers",
+      x = "Average number of viewers",
+      y = "Ranking"
+   )
+```
+
+As expected number of viewers is a pretty good predictor for the ranking. In fact
+lets run a simple linear regression.
+```{r}
+summary(lm(rank ~ viewers_mean, data = summary))
+```
+
+Highly significant. A drop in average viewers per season of 1 million raises
+the expected rating by about 1.6 rating points.
+
+### Length of filming
+
+I wonder if the length of filming somehow decreased. Possible reasons could be:
+content just needs the be produced quicker, or simply cost savings.
+
+```{r}
+# Create column that counts number of days between two dates
+summary %>% 
+   mutate(
+      n_days = difftime(filming_ended, filming_started, units = "days")
+   ) %>% 
+   pull(n_days)
+```
+
+No its pretty much constant and always about 5 weeks.
+
+## Summary
+
+As always: there is more to analyze, however, the purpose of this series 
+is not to be exhaustive but to set a time limit and just examine as many questions
+as possible within the limit.
+
+[^1]: If you reproduce the plots that follow, the appearance will
+be different but the content is the same. This is because I use a custom theme that is tailored to work well with
+the overall appearance of this website (same font families, color palettes etc.). 
+If you want to know the details of the theme, check out the [code on Github](https://github.com/M-E-Rademaker/personal-website/tree/main/code).

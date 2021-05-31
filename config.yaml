@@ -44,8 +44,8 @@ params:
   headingFontFamily: sans-serif
   textFontFamily: sans-serif
   description: My personal homepage, blog, and project portfolio
-  favicon: /img/favicon.ico
-  logo: /img/blogophonic-mark-dark.png
+  favicon: /iris-flower-ico.ico
+  logo: /iris-flower.jpg
   mainSections:
     - about
     - blog

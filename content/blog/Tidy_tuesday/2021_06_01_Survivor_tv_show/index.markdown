@@ -1,6 +1,6 @@
 ---
 author: Manuel Rademaker
-date: "2021-05-31"
+date: "2021-06-01"
 draft: false
 links:
 excerpt: The data this week comes from the `survivorR` R package by way of Daniel Oehm.
@@ -193,7 +193,7 @@ summary %>%
    geom_point() + 
    scale_x_continuous(breaks = scales::breaks_width(5)) +
    labs(
-      title = "Numnber of viewers by season",
+      title = "Number of viewers by season",
       subtitle = "In million viewers",
       x = "Season",
       y = "# Viewers",
@@ -203,7 +203,7 @@ summary %>%
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
 Number of viewers generally declined over seasons. A pretty normal development.
-However, the absolute level is still decent with > 10 million untul about season
+However, the absolute level is still decent with > 10 million viewers until about season
 25. I think its also not surprising that the reunion show is typically less well-viewed
 than the rest.
 

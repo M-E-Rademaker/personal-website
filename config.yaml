@@ -45,7 +45,7 @@ params:
   textFontFamily: sans-serif
   description: My personal homepage, blog, and project portfolio
   favicon: /iris-flower-ico.ico
-  logo: /iris-flower.jpg
+  logo: /iris-flower.png
   mainSections:
     - about
     - blog

@@ -10,7 +10,7 @@ show_action_link: true
 show_social_links: true
 subtitle: My personal homepage, blog, and project portfolio
 text_align_left: true
-title: Manuel Rademaker | About | Blog | Project portfolio
+title: Welcome!
 type: home
 ---
 

@@ -2,7 +2,7 @@
 action_label: Take a look around &rarr;
 action_link: /about
 action_type: text
-description: I am Manuel Rademaker. I was a research assistant at the Chair of Econometrics at the Faculty of Business Administration and Economics at the University of Würzburg until November 2020. Being interested and skilled in statistics, data science,  and programming (mostly in R but now more and more Python), I am currently looking for a job that lets me best put these skills into production!
+description: I am Manuel Rademaker. I was a research assistant at the Chair of Econometrics at the Faculty of Business Administration and Economics at the University of Würzburg until November 2020. Being interested and skilled in statistics, econometrics, economics, data science, and programming (mostly in R but now more and more Python), I am currently looking for a job that lets me best put these skills into production!
 image_left: true
 images:
 - Me.jpg

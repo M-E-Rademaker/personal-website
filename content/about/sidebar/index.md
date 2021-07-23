@@ -11,10 +11,12 @@ link_list:
   url: https://lexfridman.com/podcast/
 - name: 3blue1brown (Grant Sanderson)
   url: https://www.3blue1brown.com/
-- name: The Erium Podcast (german only)
-  url: https://theeriumpodcast.de
-- name: Python for Everybody
-  url: https://www.coursera.org/specializations/python
+- name: Currently reading "Why Nations Fail" by D. Acemoglu and J. Robinson 
+  url: http://whynationsfail.com/
+- name: Learning about the technical side of Bitcoin - "Programming Bitcoin"" by J. Song
+  url: https://www.oreilly.com/library/view/programming-bitcoin/9781492031482/
+- name: Kaggle SLICED competition
+  url: https://www.kaggle.com/c/sliced-s01e01
 ---
 
 ** index doesn't contain a body, just front matter above.

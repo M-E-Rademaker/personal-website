@@ -940,7 +940,7 @@ vaccination_plot_interactive <- vaccinated_matched %>%
       title = "'Vaccination rate' by Landkreis",
       subtitle = "WARNING: vaccination rate based on where the vaccine was given, \nnot (!) the zip-code of the vaccinated person.",
       fill = "",
-      caption = "Sources: RKI GitHub; Bundesamt für Kartographie und Geodäsie\nStand: 18.12.2020."
+      caption = "Sources: RKI GitHub; Bundesamt für Kartographie und Geodäsie\nStand: 2021-08-31"
    ) + 
    theme(
       panel.background = element_rect(fill = "white", colour = "white"),

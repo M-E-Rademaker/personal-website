@@ -764,11 +764,16 @@ the data that get uploaded to RKI's GitHub page is not exactly identical to the
 data underlying the dashboard. 
 
 Now, we are ready to reproduce the figure from the start of this post. Remember,
-the snapshot date was 2020-12-18. As usual, we add interactivity, cause its
-just more fun.
+the snapshot date was 2020-12-18. 
+
+NOTE: For some reason, I cant get more then two interactive plots to work when deploying
+this post to the websever. Locally it works, but when clicking on the post just 
+as you did a couple of minutes ago, the blog post incorrectly ends here.
+All plots are therefore static now, but you can simply uncomment the interactive
+sections in the code below to have it run interactivly on your local machine.
 
 ```{r}
-infections_plot_interactive <- infections_with_geometry %>% 
+infections_plot <- infections_with_geometry %>% 
    filter(Meldedatum == "2020-12-18") %>% 
    # Add bins
    mutate(
@@ -778,8 +783,8 @@ infections_plot_interactive <- infections_with_geometry %>%
    ) %>% 
    ggplot() +
    # use the interactive version and add a tooltip; glue comes in very handy here!
-   geom_sf_interactive(aes(fill = Infections_per_100k_binned, 
-                           tooltip = glue("Landkreis: {Landkreis_name}\nIncidence: {round(Infections_per_100k)}"))) + 
+   # geom_sf_interactive(aes(fill = Infections_per_100k_binned, 
+   geom_sf(aes(fill = Infections_per_100k_binned)) + 
    scale_fill_brewer(palette = "OrRd") + 
    labs(
       title = "Fälle letzte 7 Tage pro 100.000 Einwohner",
@@ -796,8 +801,9 @@ infections_plot_interactive <- infections_with_geometry %>%
       panel.grid.major = element_blank(),
       legend.position = "bottom"
    )
-
-girafe(ggobj = infections_plot_interactive)
+# interactive version
+# girafe(ggobj = infections_plot)
+infections_plot
 ```
 
 If you look close, you see that some Landkreise are dark red, i.e. category "über 500 bis 1.000"
@@ -923,16 +929,18 @@ vaccinated_matched <- vg250_ew_2020 %>%
       vaccination_rate = Geimpft / EWZ
    )
 ```
-And here is the plot
+And here is the plot. Again, enable interactivity by uncommenting the interactive
+code parts.
 ```{r}
-vaccination_plot_interactive <- vaccinated_matched %>% 
+vaccination_plot <- vaccinated_matched %>% 
    # Remove "Auffrischungsimpfungen"
    filter(Impfschutz %in% 1:2) %>% 
    mutate(Impfschutz = if_else(Impfschutz == 1, "Einmal geimpft (ex Janssen)", "Voll geimpft (incl. Janssen)")) %>% 
    ggplot() +
    # use the interactive version and add a tooltip; glue comes in very handy here!
-   geom_sf_interactive(aes(fill = vaccination_rate, 
-                           tooltip = glue("Landkreis: {Landkreis_name}\nVaccintion rate: {scales::percent(vaccination_rate, accuracy = 0.1)}"))) + 
+   # geom_sf_interactive(aes(fill = vaccination_rate, 
+   #                         tooltip = glue("Landkreis: {Landkreis_name}\nVaccintion rate: {scales::percent(vaccination_rate, accuracy = 0.1)}"))) + 
+   geom_sf(aes(fill = vaccination_rate)) +
    scale_fill_gradient(low = "white", high = party_colors["DIE GRÜNEN"],
                        label = scales::label_percent()) + 
    facet_grid(cols = vars(Impfschutz)) + 
@@ -953,7 +961,9 @@ vaccination_plot_interactive <- vaccinated_matched %>%
       legend.position = "bottom"
    )
 
-girafe(ggobj = vaccination_plot_interactive)
+# Interactive version.
+# girafe(ggobj = vaccination_plot)
+vaccination_plot
 ```
 
 As you can see, there are some Landkreise (in particular kreisefreie Städte, which

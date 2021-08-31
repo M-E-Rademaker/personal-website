@@ -10,10 +10,11 @@ categories:
 - "Interactivity"
 date: "2021-08-31"
 draft: false
-excerpt: Inspired by a figure I saw on KATAPULT magazins website, I provide hands-on
-  analysis of the 2017 paralamentary election results of the german party "Alternative für Deutschland" (AfD), 
-  COVID-19/SARS-COV-2 infection data including the 7-day incidence rate per 100.000 people and
-  vaccination date.
+excerpt: Inspired by a figure I saw on the “KATAPULT-Magazine” website, I provide 
+  hands-on analysis of the 2017 parliamentary election results of the German party 
+  "Alternative für Deutschland" (AfD) and its relationship to COVID-19/SARS-COV-2
+  infection data including the 7-day incidence rate per 100.000 people and
+  vaccination data.
 layout: single
 links:
 - icon: github
@@ -34,8 +35,8 @@ Recently, I stumbled across this graphic from great [KATAPULT magazin](https://k
 
 The left map shows the final 2017 parliamentary election (second vote) results 
 (Zweitstimmenergebnis Bundestagswahl 2017)
-by election region (Wahlkreis) for the german party *"Alternative für Deutschland" (AfD)*. 
-One the right the 7-day COVID-19 incidence per 100,000 people is shown 
+by election region (Wahlkreis) for the German party *"Alternative für Deutschland" (AfD)*. 
+On the right, the 7-day COVID-19 incidence per 100,000 people is shown 
 by administrative region (Landkreis) as of 18.12.2020. Note that Wahlkreise and
 Landkreise are generally similar but do differ on many occasions.
 
@@ -100,7 +101,7 @@ set would be like taking a shortcut when you are going for a hike -- it simply
 misses the point. Second, the R package `COVID19` -- an interface to the COVID-19 Data Hub --
 does not provide vaccination data on the Landkreis level, so I decided to use the raw RKI data. While the package does provide infection
 data, it does not contain the AGS ("Amtlicher Gemeindeschlüssel"). The AGS is essentially a 
-unique Id for each Landkreis and kreisfreie Stadt that is used by all official/adminstrative data
+unique Id for each Landkreis and kreisfreie Stadt that is used by all official/administrative data
 providers. Since I need to match different data sets by Landkreis later, its nice
 to have an Id since matching by Id is a lot -- backed by (bad) experiences -- less error-prone
 than by name. Moreover, the AGS has the added benefit of a clear
@@ -136,7 +137,7 @@ Note:
 |:-------------------------|:---------| :------------|
 |`election_results_2017.csv` | [Bundeswahlleiter][bundeswahlleiter1],  [Direct-link-to-data][election] | Final results of the 2017 general election by Wahlkreis.|
 |`wahlkreise_shp_2017.zip` | [Bundeswahlleiter][bundeswahlleiter2], [Direct-link-to-data][wahlkreis_shp_2017] | `.zip` file containing the geometry for all 299 Wahlkreise in different formats. In the following, I only use the shapefile format (`.shp`). The file needed is called: `Geometrie_Wahlkreise_20DBT_VG250_geo.shp`.   |
-| `vg250_ew_2020.zip`    | [BfKG][BfKG], [Direct-link-to-data][VG250-EW]  | `.zip` file containing the geometry of german administrative areas including population from the "Bundesamt für Kartografie und Geodäsie" as of 01.01.2020. Only the geometry of the Kreise and kreisfreie Städte is needed. The relevant file is called: `VG250_KRS.shp`. |
+| `vg250_ew_2020.zip`    | [BfKG][BfKG], [Direct-link-to-data][VG250-EW]  | `.zip` file containing the geometry of German administrative areas including population from the "Bundesamt für Kartografie und Geodäsie" as of 01.01.2020. Only the geometry of the Kreise and kreisfreie Städte is needed. The relevant file is called: `VG250_KRS.shp`. |
 | `Aktuell_...-Impfungen.csv` | [RKI GitHub][RKI_Github_vacc], [Direct-link-to-data][RKI_Github_vacc_data] | Absolute number of people vaccinated against COVID-19 by Landkreis, date, age group, and vaccination number (first or second) starting 27.12.2020. |
 | `Aktuell_..._Infektionen.csv` | [RKI Github][RKI_Github_infect], [Direct-link-to-data][RKI_Github_infect_data] | Absolute number of infections with the SARS-COV-2 virus by Landkreis, date, age group and other characteristics.|
 
@@ -146,7 +147,7 @@ Once you have downloaded and unzipped the data, run the following to read the da
 Ignore all the warnings and messages. We will have to do some processing anyway.
 
 ```{r eval=FALSE}
-# 2017 german parliamentary election results
+# 2017 German parliamentary election results
 election_results_2017 <- read_csv2("election_results_2017.csv", skip = 5)
 # Shapefile with the geometry of the 299 german Wahlkreise 
 wahlkreise_shp_2017   <- st_read("wahlkreise_shp_2017/Geometrie_Wahlkreise_20DBT_VG250_geo.shp")
@@ -182,7 +183,7 @@ infections_raw <- read_csv("infections_raw.csv")
 If you prefer the more programmatic approach, you can also skip downloading manually and
 use R to download, unzip and read the files directly without leaving your R session.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 # 2017 german parliamentary election results
 election_results_2017_url <- "https://www.bundeswahlleiter.de/dam/jcr/72f186bb-aa56-47d3-b24c-6a46f5de22d0/btw17_kerg.csv"
 download.file(election_results_2017_url, destfile = "election_results_2017.csv")
@@ -206,32 +207,6 @@ vaccinated_raw <- read_csv("https://raw.githubusercontent.com/robert-koch-instit
 # Absolute number SARS-COV-2 infections by characteristics
 infections_raw <- read_csv("https://media.githubusercontent.com/media/robert-koch-institut/SARS-CoV-2_Infektionen_in_Deutschland/master/Aktuell_Deutschland_SarsCov2_Infektionen.csv")
 ```
-
-<!-- ```{r} -->
-<!-- # 2017 german parliamentary election results -->
-<!-- election_results_2017_url <- "https://www.bundeswahlleiter.de/dam/jcr/72f186bb-aa56-47d3-b24c-6a46f5de22d0/btw17_kerg.csv" -->
-<!-- download.file(election_results_2017_url, destfile = "content/blog/2021-08-31_election_results_and_covid_data/election_results_2017.csv") -->
-<!-- election_results_2017 <- read_csv2("content/blog/2021-08-31_election_results_and_covid_data/election_results_2017.csv", skip = 5) -->
-
-<!-- # Shapefile with the geometry of the 299 german Wahlkreise  -->
-<!-- wahl_shp_url <- "https://www.bundeswahlleiter.de/dam/jcr/4238f883-5a9b-4da6-a4d5-ac86f3752b88/btw21_geometrie_wahlkreise_vg250_geo_shp.zip" -->
-<!-- download.file(wahl_shp_url, destfile = "content/blog/2021-08-31_election_results_and_covid_data/wahlkreise_shp_2017.zip") -->
-<!-- unzip("content/blog/2021-08-31_election_results_and_covid_data/wahlkreise_shp_2017.zip", exdir = "content/blog/2021-08-31_election_results_and_covid_data/wahlkreise_shp_2017") -->
-<!-- wahlkreise_shp_2017 <- st_read("content/blog/2021-08-31_election_results_and_covid_data/wahlkreis_shp_2017/Geometrie_Wahlkreise_20DBT_VG250_geo.shp") -->
-
-<!-- # Shapefile with the geometry (including population) of the 401 Landkreise and kreisfreie Städte -->
-<!-- vg250_ew_2020_url <- "https://daten.gdz.bkg.bund.de/produkte/vg/vg250-ew_ebenen_1231/aktuell/vg250-ew_12-31.gk3.shape.ebenen.zip" -->
-<!-- download.file(vg250_ew_2020_url, destfile = "content/blog/2021-08-31_election_results_and_covid_data/vg250_ew_2020.zip") -->
-<!-- unzip("content/blog/2021-08-31_election_results_and_covid_data/vg250_ew_2020.zip", exdir = "content/blog/2021-08-31_election_results_and_covid_data/vg250_ew_2020") -->
-<!-- vg250_ew_2020 <- st_read("content/blog/2021-08-31_election_results_and_covid_data/vg250_ew_2020/vg250-ew_12-31.gk3.shape.ebenen/vg250-ew_ebenen_1231/VG250_KRS.shp") -->
-
-<!-- # Absolute number of people vaccinated by characteristics -->
-<!-- vaccinated_landkreis_raw <- read_csv("https://raw.githubusercontent.com/robert-koch-institut/COVID-19-Impfungen_in_Deutschland/master/Aktuell_Deutschland_Landkreise_COVID-19-Impfungen.csv") -->
-
-<!-- # Absolute number SARS-COV-2 infections by characteristics -->
-<!-- infections_raw <- read_csv("https://media.githubusercontent.com/media/robert-koch-institut/SARS-CoV-2_Infektionen_in_Deutschland/master/Aktuell_Deutschland_SarsCov2_Infektionen.csv") -->
-<!-- ``` -->
-
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 ## Setup options
@@ -328,7 +303,7 @@ Here is what we are going to do:
    at percentages/shares. To be precise: the share of votes for a given party with respect to 
    the total number of **valid** votes for each Wahlkreis (which is given in column `X18`).
 1. The Wahlkreis names are in column `Wahlkreis` but grouped by Bundesland. Hence,
-   the Bundesland appears as a row. A tranformation is done to pivot these rows into
+   the Bundesland appears as a row. A transformation is done to pivot these rows into
    a column called `Bundesland`.
 
 ```{r}
@@ -435,7 +410,7 @@ A quick look at website confirms: the numbers match!
 
 Next we join the election results for each Wahlkreis with the corresponding 
 geometry information of that Wahlkreis. Once this is done, we can plot a map all 
-299 german Wahlkreise and color each according to a given party's share of valid 
+299 German Wahlkreise and color each according to a given party's share of valid 
 votes. Since we have done all the work already, joining is easy now.
 
 ```{r}
@@ -524,7 +499,7 @@ visualization to stress that the Wiedervereinigung has still not been finished..
 
 Static maps are fine, but who does not like interactivity? There are many ways to achieve
 interactivity. If you are comfortable around ggplot and are fine with some basic
-interactivtiy tools like a tooltip, the [ggiraph package](https://davidgohel.github.io/ggiraph/) is
+interactivity  tools like a tooltip, the [ggiraph package](https://davidgohel.github.io/ggiraph/) is
 probably most easiest to pick up. You simply switch the regular `geom_*` or `scale_*`
 objects from ggplot with their interactive counterpart from ggiraph and subsequently
 wrap the whole plot in the `girafe()` function. That's basically it. 
@@ -547,7 +522,7 @@ afd_plot <- election_matched %>%
    scale_fill_brewer(palette = "Blues") + 
    labs(
       title = "Bundestagswahl 2017",
-      # the term inside the {} is evaluated an inserted when exectued. See ?glue
+      # the term inside the {} is evaluated an inserted when executed. See ?glue
       subtitle ="Zweitstimmen in Prozent (AfD)",
       fill = "",
       caption = "Sources: Bundeswahlleiter; Bundesamt für Kartographie und Geodäsie"
@@ -607,13 +582,13 @@ infections_raw %>%
    head(6)
 ```
 
-This is why the RKI data is considered a prime data set when looking at **past**
+Therefore, the RKI data is considered a prime data set when looking at **past**
 numbers: you can be sufficiently sure that every correction to the numbers ever
 reported to the RKI are reflected in this data set.
 
-On the downside, it may not be the best data if you need up-to-data near-realtime data.
+On the downside, it may not be the best data if you need up-to-data near-real-time data.
 
-Luckily, for our purpose things like "Meldeverzug" and past vs. realtime data are 
+Luckily, for our purpose things like "Meldeverzug" and past vs. real-time data are 
 not a particular big issue since if `NeuerFall` is not 0 (indicating a normal report), 
 the variable `AnzahlFall` has the respective sign of the `NeuerFall` column. 
 Simply summing the absolute numbers by Landkreis and Meldedatum takes thus care
@@ -630,7 +605,7 @@ infections <- infections_raw %>%
 infections %>% head(6) %>%  gt()
 ```
 
-A couple of things remain to be adressed.
+A couple of things remain to be addressed.
 
 1. As stated in the [README on the RKI GitHub page](https://github.com/robert-koch-institut/SARS-CoV-2_Infektionen_in_Deutschland)
     > Für eine genauere Darstellung des Landkreises Berlin, werden die 12 
@@ -667,13 +642,13 @@ infections <- infections %>%
 
 ### 7-day incidence
 
-The 7-day incidence per 100'000 people in a given Landkreis on a given date
+The 7-day incidence per 100'000 people in each Landkreis on a given date
 is the rolling 7-day sum over the absolute number of positive cases (only PCR test!)
 of that Landkreis and date divided by the total population per 100'000 of the Landkreis.
 
-To compute the rolling sum, the `zoo::rollsum()` can be used. Lets compute the 
+To compute the rolling sum, the `zoo::rollsum()` can be used. Let’s compute the 
 rolling sum, join the population/geometry data and lastly compute the incidence per 100'000
-people. I also compute the 7-day rolling mean in order to be able to plot a smooth
+people. I also compute the 7-day rolling mean to be able to plot a smooth
 curve of total infections below.
 
 Note that technically the 7-day rolling sum (and mean) at the beginning of the 
@@ -695,7 +670,7 @@ Hence the additional 30 rows.
 However, population is set to 0 for any appearances but the first in the data.  
 Since we only require the geometry and the population, we have to delete all appearances
 of a Kreis that have EWZ (the population) equal to zero. Failing to delete those rows
-leads to double matching once we join the two data sets. As a consequence case numbers
+leads to double matching once we join the two data sets. As a consequence, case numbers
 would be counted twice inflating the number of actual cases.
 
 ```{r}
@@ -725,7 +700,7 @@ is a good first indication. Again we add interactivity in order to allow for a
 easy comparison to the numbers of the [official RKI dashboard](https://experience.arcgis.com/experience/478220a4c454480e823b17327b2bf1d4/page/page_1/).
 In this case, we use the [dygraph library](https://rstudio.github.io/dygraphs/index.html)
 which is an R interface to the [dygraphs JavaScript charting library](https://dygraphs.com/).
-The reason is simple: its super easy to use and yet supports the essentials of interactivy like
+The reason is simple: its super easy to use and yet supports the essentials of interactivity like
 zooming in on a date range and hovering. There is even a little box on the left bottom
 that allows for computation of a rolling mean. Enter
 e.g. 7 and you get the 7-day rolling mean.
@@ -766,11 +741,11 @@ data underlying the dashboard.
 Now, we are ready to reproduce the figure from the start of this post. Remember,
 the snapshot date was 2020-12-18. 
 
-NOTE: For some reason, I cant get more then two interactive plots to work when deploying
-this post to the websever. Locally it works, but when clicking on the post just 
+NOTE: For some reason, I cant get more than two interactive plots to work when deploying
+this post to the web server. Locally, it works but when clicking on the post just 
 as you did a couple of minutes ago, the blog post incorrectly ends here.
 All plots are therefore static now, but you can simply uncomment the interactive
-sections in the code below to have it run interactivly on your local machine.
+sections in the code below to have it run interactively on your local machine.
 
 ```{r}
 infections_plot <- infections_with_geometry %>% 
@@ -806,10 +781,10 @@ infections_plot <- infections_with_geometry %>%
 infections_plot
 ```
 
-If you look close, you see that some Landkreise are dark red, i.e. category "über 500 bis 1.000"
+If you look closely, you see that some Landkreise are dark red, i.e. category "über 500 bis 1.000"
 (e.g. Erzgebirgekreis, SN) in our figure while in the original KATAPULT figure
 they are one category below. I guess the difference is simply due to reporting
-corrections. As already mentioned: the RKI has its strength in the past. A cross-check
+corrections. As already mentioned, the RKI has its strength in the past. A cross-check
 with e.g. [this dashboard](https://health-mapping.de/7TageInzidenz/) confirms that
 the more recent numbers in our figure are correct.
 
@@ -823,8 +798,8 @@ During the pandemic cases went up and down, Landkreise whose numbers skyrocket
 found themselves with neglectable numbers a couple of month later while other
 Landkreise started to suffer. 
 
-Much more telling than a simple one day snapshot is evolution over time by party
-stronghold. The biggest issue is, that it is actually pretty tedious to match Wahlkreise
+Much more telling than a simple one-day snapshot is evolution over time by party
+stronghold. The biggest issue is that it is actually pretty tedious to match Wahlkreise
 and Landkreise. As I mentioned at the beginning: Walhkreise (of which there are 299)
 do follow the Landkreis boundaries if possible but differ on many significant 
 occasions. The reason is simple: Wahlkreise ought to be "similar" in terms of
@@ -834,7 +809,7 @@ Seeing that the AFD performed strongest in Sachsen and parts of Thüringen a rou
 quick-and-dirty approximation is to simply take these two Bundesländer as a proxy
 for "AFD stronghold".
 
-Lets plot the 7-day incidence for these who Bundesländer (i.e. the AFD stronghold) 
+Let's plot the 7-day incidence for these who Bundesländer (i.e. the AFD stronghold) 
 over time and compare to the incidence of the rest of the country.
 
 ```{r}
@@ -858,28 +833,28 @@ infections_with_geometry %>%
    )
 ```
 
-The figure suggest a correlation indeed, in particular, during the worst times of
+The figure suggests a correlation indeed, in particular, during the worst times of
 the pandemic. On the other hand, the most recent numbers indicate
 a strong upward movement in the numbers in the rest of Germany. Remains to be 
 seen if the AFD strongholds catch up. 
 
 I do not want to get into a causal analysis here because that requires
-a much much more detailed look at the numbers and, hence, a separate blog post. 
+a much, much more detailed look at the numbers and, hence, a separate blog post. 
 However, the correlation is definitely reason for thought.
 
 ## Vaccination by Landkreis
 Lastly, I want to briefly discuss vaccination data. As I wrote at the beginning,
-it would be highly intersting to see if there is a similar correlation to election results
-when using the vaccination rate per Landkreis. Well, thats simply not possible right now.
+it would be highly interesting to see if there is a similar correlation to election results
+when using the vaccination rate per Landkreis. Well, that's simply not possible right now.
 
 The reason is that vaccination centers, hospitals, doctors etc. only report 
 **the location** they gave a vaccination shot (usually simply the zip code
-of their adress) but **not where the vaccinated person** actually lives!
+of their address) but **not where the vaccinated person** actually lives!
 An obvious problem: people are not required to get vaccinated in the same area
 as their own zip code, so Landkreise with vaccination centers are likely to have 
-much higher vaccination rates compared to those that dont. Consequently, "Vaccination by Landkreis" 
+much higher vaccination rates compared to those that don't. Consequently, "Vaccination by Landkreis" 
 is actually rather misleading. To illustrate the severity of the problem, lets
-naivly compute the vaccination rate by Landkreis by simply dividing the  
+naively compute the vaccination rate by Landkreis by simply dividing the  
 sum of vaccinations administered in a given Landkreis by the population of
 that Landkreis.
 
@@ -903,20 +878,20 @@ don't belong to a Landkreis.
 vaccinated <- vaccinated %>% 
   filter(AGS != "u")
 
-# Lets check if there are 401 Kreise
+# Let's check if there are 401 Kreise
 length(unique(vaccinated$AGS))
 ```
 Turns out there are 402 Landkreise. A quick look in the documentation on the 
-RKI GitHub website reveals. There is an addiontal "Landkreis" with number 17000
+RKI GitHub website reveals. There is an additional "Landkreis" with number 17000
 which comprises all Bundesressorts. I am not exactly sure what a "Bundesressort" is, but
-since we are not interested in the overall vaccination rate we can drop those.
+since we are not interested in the overall vaccination rate, we can drop those.
 
 ```{r}
 vaccinated <- vaccinated %>% 
   filter(AGS != 17000)
 ```
 
-Next we need to join population data and geometry information
+Next, we need to join population data and geometry information
 
 ```{r}
 vaccinated_matched <- vg250_ew_2020 %>%  

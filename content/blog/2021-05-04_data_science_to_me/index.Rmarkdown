@@ -27,7 +27,8 @@ when people talk about digitalization, automation, data-driven decision
 making or industry 4.0.
 However, different professional backgrounds and hierarchy levels tend to have 
 different ideas and expectations regarding the meaning of these terms. In this 
-blog post, I want to give my personal view on one of these terms, namely the term *data science* and its professional equivalent the *data scientist*.
+blog post, I want to give my personal view on one of these terms, namely the term
+*data science* and its professional equivalent the *data scientist*.
 
 In general, for me, the purpose of a data scientist is
 
@@ -69,13 +70,14 @@ than there is (non-redundant) information in the data -- even if terms like
 most important message or disclaimer to tell someone who hasn't had any contact
 with data science before:
 
-> Data science is a science not magic!
+> Data science is a science not data magic!
 
 Roughly speaking, data science is therefore simply the act of approaching the information extraction, processing and communication task in a scientific way.  
 
 ### Communication is the bridge to the real world
 
-Results that are not communicated in a way that is meaningful to key decision makers such that concrete problems can be solved have, in my view, no added value beyond 
+Results that are not communicated in a way that is meaningful to key decision 
+makers such that concrete problems can be solved have, in my view, no added value beyond 
 the insight they generate in the data scientist herself -- which admittedly is
 of value too! Nonetheless, didactic and convincing presentation skills, the power to persuade, empathy, and the general ability to communicate adequately is therefore 
 just as important for a good data scientist as the methodological knowledge. 

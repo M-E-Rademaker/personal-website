@@ -11,8 +11,6 @@ require(zoo)        # to compute the rolling 7-day sum
 require(xts)        # for working with time series
 require(dygraphs)   # interactive time series
 
-
-## ----eval=FALSE----------------------------------------------------------
 ## # 2017 german parliamentary election results
 ## election_results_2017 <- read_csv2("election_results_2017.csv", skip = 5)
 ## # Shapefile with the geometry of the 299 german Wahlkreise
@@ -24,29 +22,6 @@ require(dygraphs)   # interactive time series
 ## # Absolute number SARS-COV-2 infections by characteristics
 ## infections_raw <- read_csv("https://media.githubusercontent.com/media/robert-koch-institut/SARS-CoV-2_Infektionen_in_Deutschland/master/Aktuell_Deutschland_SarsCov2_Infektionen.csv")
 
-
-## ----eval=FALSE, include=FALSE, echo=FALSE-------------------------------
-## ## Run this once to save the vaccination and infection data locally as downloading
-## ## from the web takes up to a minute
-## write.csv(vaccinated_raw, file = "content/blog/2021-08-31_election_results_and_covid_data/vaccinated_raw.csv")
-## write.csv(infections_raw, file = "content/blog/2021-08-31_election_results_and_covid_data/infections_raw.csv")
-## 
-## election_results_2017 <- read_csv2("content/blog/2021-08-31_election_results_and_covid_data/election_results_2017.csv", skip = 5)
-## wahlkreise_shp_2017   <- st_read("content/blog/2021-08-31_election_results_and_covid_data/wahlkreise_shp_2017/Geometrie_Wahlkreise_20DBT_VG250_geo.shp")
-## vg250_ew_2020         <- st_read("content/blog/2021-08-31_election_results_and_covid_data/vg250_ew_2020/vg250-ew_12-31.gk3.shape.ebenen/vg250-ew_ebenen_1231/VG250_KRS.shp")
-## vaccinated_raw <- read_csv("content/blog/2021-08-31_election_results_and_covid_data/vaccinated_raw.csv")
-## infections_raw <- read_csv("content/blog/2021-08-31_election_results_and_covid_data/infections_raw.csv")
-
-
-## ----eval=FALSE, echo=FALSE, include=FALSE, warning=FALSE, message=FALSE----
-## election_results_2017 <- read_csv2("election_results_2017.csv", skip = 5)
-## wahlkreise_shp_2017   <- st_read("wahlkreise_shp_2017/Geometrie_Wahlkreise_20DBT_VG250_geo.shp")
-## vg250_ew_2020         <- st_read("vg250_ew_2020/vg250-ew_12-31.gk3.shape.ebenen/vg250-ew_ebenen_1231/VG250_KRS.shp")
-## vaccinated_raw <- read_csv("vaccinated_raw.csv")
-## infections_raw <- read_csv("infections_raw.csv")
-
-
-## ------------------------------------------------------------------------
 # 2017 german parliamentary election results
 election_results_2017_url <- "https://www.bundeswahlleiter.de/dam/jcr/72f186bb-aa56-47d3-b24c-6a46f5de22d0/btw17_kerg.csv"
 download.file(election_results_2017_url, destfile = "election_results_2017.csv")
@@ -71,17 +46,6 @@ vaccinated_raw <- read_csv("https://raw.githubusercontent.com/robert-koch-instit
 infections_raw <- read_csv("https://media.githubusercontent.com/media/robert-koch-institut/SARS-CoV-2_Infektionen_in_Deutschland/master/Aktuell_Deutschland_SarsCov2_Infektionen.csv")
 
 
-## ----echo=FALSE, message=FALSE, warning=FALSE----------------------------
-## Setup options
-knitr::opts_chunk$set(
-   echo         = TRUE,
-   fig.showtext = TRUE,
-   fig.align    = "center",
-   message      = FALSE,
-   warning      = FALSE,
-   collapse     = TRUE
-   )
-
 ## Load showtext for fonts
 require(showtext)
 
@@ -92,10 +56,10 @@ require(showtext)
 #          regular = "_not_for_git/Fraunces/static/Fraunces_9pt_Soft/Fraunces_9pt_Soft-Regular.ttf")
 
 # ## Load fonts
-font_add(family = "commissioner",
-         regular = "../fonts/Commissioner-Light.ttf")
-font_add(family = "fraunces",
-         regular = "../fonts/Fraunces_9pt_Soft-Regular.ttf")
+# font_add(family = "commissioner",
+#          regular = "../fonts/Commissioner-Light.ttf")
+# font_add(family = "fraunces",
+#          regular = "../fonts/Fraunces_9pt_Soft-Regular.ttf")
 
 ## Colors
 main_color    = "#516DB0"
@@ -120,11 +84,6 @@ website_theme <- theme_light() + theme(
 )
 
 theme_set(website_theme)
-
-## For default color scheme
-# scale_colour_discrete <- function(...) {
-#   scale_colour_manual(..., values = color_scheme)
-# }
 
 
 ## ------------------------------------------------------------------------

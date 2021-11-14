@@ -2,10 +2,10 @@
 action_label: Take a look around &rarr;
 action_link: /about
 action_type: text
-description: I am Manuel Rademaker. Starting September 2021 I'll be working as a Data Scientist 
+description: I am Manuel Rademaker. I am currently employed as a Data Scientist 
  at the Fürstlich Castell'sche Bank. I was a research assistant at the Chair of
  Econometrics at the Faculty of Business Administration and Economics at the 
- University of Würzburg until November 2020. My primary interestes and skills are in
+ University of Würzburg until November 2020. My primary interests and skills are in
  statistics, econometrics, economics, data science, and programming 
  (mostly in R but now more and more Python).
 image_left: true

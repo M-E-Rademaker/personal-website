@@ -67,7 +67,7 @@ Most notably, I am interested in:
 1. data processing in general: in particular making maps in R, 
    pulling data from different sources, cleaning, 
    merging and everything else needed to create meaningful visualizations -- 
-   quite in the spirit of my [TidyTuesday Series](https://www.manuel-rademaker.com/blog/tidy_tuesday/).
+   quite in the spirit of my [TidyTuesday Series](https://www.manuelrademaker.com/blog/tidy_tuesday/).
 
 ## Setup
 
@@ -509,6 +509,9 @@ the original figure, I also added binned results.
 ```{r}
 afd_plot <- election_matched %>% 
    filter(Party == "AFD") %>% 
+   # simplify the geometry: the interactive map embeds every vertex in the page,
+   # at full resolution the page would be ~11 MB
+   rmapshaper::ms_simplify(keep = 0.02, keep_shapes = TRUE) %>% 
    # Add binned election results according to the bins of the original figure
    mutate(
       Results_binned = cut(Results, 

@@ -1,4 +1,4 @@
-baseURL: https://www.manuel-rademaker.com/
+baseURL: https://www.manuelrademaker.com/
 theme: hugo-apero
 languageCode: en
 title: Manuel Rademaker - Personal Website
@@ -18,6 +18,11 @@ ignoreFiles:
   - _temp$
   - _ignore$
   - code$
+  # raw data used only when knitting posts locally; don't publish it
+  - vg250_ew_2020
+  - wahlkreise_shp_2017
+  - election_results_2017\.csv$
+  - tt_data
 enableEmoji: true
 markup:
   defaultMarkdownHandler: goldmark
@@ -44,8 +49,8 @@ params:
   headingFontFamily: sans-serif
   textFontFamily: sans-serif
   description: My personal homepage, blog, and project portfolio
-  favicon: /iris-flower-favicon.ico
-  logo: /iris-flower.png
+  favicon: /centered_iris_flower.ico
+  logo: /centered_iris_flower.png
   mainSections:
     - about
     - blog
